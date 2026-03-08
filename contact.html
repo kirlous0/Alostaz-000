@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تواصل معنا — صالون الأستاذ</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e2c47a;
+    --gold-dim: rgba(201,168,76,0.12);
+    --black: #080808;
+    --black2: #111111;
+    --white: #f5f0e8;
+    --muted: #6b6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 64px;
+    background: rgba(8,8,8,0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.7rem;
+    color: var(--gold-light);
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(245,240,232,0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; right: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { width: 100%; }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header {
+    margin-top: 65px;
+    padding: 90px 64px 70px;
+    background: var(--black2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: 'CONTACT';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10rem;
+    font-weight: 900;
+    color: rgba(201,168,76,0.03);
+    white-space: nowrap;
+    letter-spacing: 20px;
+    pointer-events: none;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 64px;
+    width: 80px; height: 2px;
+    background: var(--gold);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { color: var(--gold); }
+
+  .page-header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    color: var(--white);
+    line-height: 1.1;
+    position: relative;
+  }
+
+  .page-header h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+  }
+
+  /* LEFT — Info */
+  .contact-info {
+    background: var(--black2);
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    border-left: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .info-block {}
+
+  .info-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .info-label::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--gold);
+  }
+
+  .info-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+    transition: color 0.3s;
+  }
+
+  .info-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Clickable cards */
+  .info-card {
+    display: block;
+    text-decoration: none;
+    background: var(--black);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 4px;
+    padding: 24px 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s;
+  }
+
+  .info-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-3px);
+  }
+
+  .info-card:hover::after { width: 100%; }
+
+  .info-card .info-value { color: var(--gold-light); }
+
+  /* Hours table */
+  .hours-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hour-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.06);
+  }
+
+  .hour-row:last-child { border-bottom: none; }
+
+  .hour-day { font-size: 0.9rem; color: var(--muted); font-weight: 300; }
+
+  .hour-time {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .open-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    color: #00ff88;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+
+  .open-dot {
+    width: 6px; height: 6px;
+    background: #00ff88;
+    border-radius: 50%;
+    animation: blink 2s ease infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* RIGHT — Map + Social */
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-container {
+    flex: 1;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+    background: var(--black2);
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: grayscale(1) invert(0.9) contrast(0.85);
+    opacity: 0.7;
+  }
+
+  /* Map overlay label */
+  .map-label {
+    position: absolute;
+    bottom: 24px; right: 24px;
+    background: rgba(8,8,8,0.92);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 14px 20px;
+    border-radius: 3px;
+    backdrop-filter: blur(10px);
+  }
+
+  .map-label p {
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .map-label span {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Social row */
+  .social-row {
+    background: var(--black);
+    border-top: 1px solid rgba(201,168,76,0.08);
+    padding: 32px 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    border: 1px solid;
+  }
+
+  .social-btn.phone {
+    background: var(--gold-dim);
+    border-color: rgba(201,168,76,0.25);
+    color: var(--gold-light);
+  }
+
+  .social-btn.phone:hover {
+    background: rgba(201,168,76,0.2);
+    transform: translateY(-2px);
+  }
+
+  .social-btn.whatsapp {
+    background: rgba(37,211,102,0.08);
+    border-color: rgba(37,211,102,0.25);
+    color: #25d366;
+  }
+
+  .social-btn.whatsapp:hover {
+    background: rgba(37,211,102,0.15);
+    transform: translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--black);
+    padding: 60px 64px 32px;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 50px;
+  }
+
+  .footer-logo-text {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .footer-brand p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.9;
+    font-weight: 300;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--gold-light); }
+  .footer-col p { color: var(--muted); font-size: 0.88rem; line-height: 2; font-weight: 300; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.08);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-bottom p { color: #2e2820; font-size: 0.8rem; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .map-container { min-height: 300px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 70px 24px 50px; }
+    .page-header::after { right: 24px; }
+    .contact-info { padding: 50px 24px; }
+    .social-row { padding: 24px 20px; }
+    footer { padding: 50px 24px 28px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="alostaz_index.html" class="nav-logo">الأستاذ</a>
+  <ul class="nav-links">
+    <li><a href="alostaz_index.html">الرئيسية</a></li>
+    <li><a href="alostaz_services.html">الخدمات</a></li>
+    <li><a href="alostaz_contact.html" class="active">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="alostaz_index.html">الرئيسية</a>
+    <span>/</span>
+    <span>تواصل معنا</span>
+  </div>
+  <h1>تواصل<br><em>معنا</em></h1>
+</div>
+
+<!-- CONTACT LAYOUT -->
+<div class="contact-layout">
+
+  <!-- INFO -->
+  <div class="contact-info">
+
+    <!-- Status -->
+    <div class="info-block">
+      <div class="info-label">الحالة دلوقتي</div>
+      <div class="open-badge">
+        <div class="open-dot"></div>
+        مفتوح — يغلق الساعة ١١م
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <a href="tel:01098765432" class="info-card">
+      <div class="info-label">تليفون</div>
+      <div class="info-value">📞 01098765432</div>
+      <div class="info-sub">اضغط للاتصال مباشرة</div>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/201098765432" target="_blank" class="info-card">
+      <div class="info-label">واتساب</div>
+      <div class="info-value">💬 01098765432</div>
+      <div class="info-sub">اضغط للمحادثة على الواتساب</div>
+    </a>
+
+    <!-- Address -->
+    <div class="info-block">
+      <div class="info-label">العنوان</div>
+      <div class="info-value" style="font-size:1.1rem">📍 22 شارع فيصل، المعادي، القاهرة</div>
+    </div>
+
+    <!-- Hours -->
+    <div class="info-block">
+      <div class="info-label">مواعيد العمل</div>
+      <div class="hours-grid">
+        <div class="hour-row">
+          <span class="hour-day">السبت — الخميس</span>
+          <span class="hour-time">٩ص — ١١م</span>
+        </div>
+        <div class="hour-row">
+          <span class="hour-day">الجمعة</span>
+          <span class="hour-time">٢م — ١١م</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAP + SOCIAL -->
+  <div class="contact-right">
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.789!2d31.2615!3d29.9602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDU3JzM2LjciTiAzMcKwMTUnNDEuNCJF!5e0!3m2!1sar!2seg!4v1620000000000!5m2!1sar!2seg"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+      <div class="map-label">
+        <p>صالون الأستاذ</p>
+        <span>22 شارع فيصل، المعادي</span>
+      </div>
+    </div>
+
+    <div class="social-row">
+      <a href="tel:01098765432" class="social-btn phone">
+        📞 اتصل دلوقتي
+      </a>
+      <a href="https://wa.me/201098765432" target="_blank" class="social-btn whatsapp">
+        💬 واتساب
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo-text">الأستاذ</span>
+      <p>صالون حلاقة رجالي فاخر في قلب المعادي — بنقدم أحسن تجربة حلاقة بأيدي محترفين.</p>
+    </div>
+    <div class="footer-col">
+      <h4>صفحات</h4>
+      <ul>
+        <li><a href="alostaz_index.html">الرئيسية</a></li>
+        <li><a href="alostaz_services.html">الخدمات</a></li>
+        <li><a href="alostaz_contact.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل</h4>
+      <p>📞 01098765432</p>
+      <p>📍 22 شارع فيصل، المعادي</p>
+      <p>🕐 ٩ص — ١١م يومياً</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 صالون الأستاذ — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+</body>
+</html>
