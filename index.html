@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صالون الأستاذ</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e2c47a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --black: #080808;
+    --black2: #111111;
+    --black3: #1a1a1a;
+    --white: #f5f0e8;
+    --muted: #6b6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ===== CUSTOM CURSOR ===== */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.1s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 64px;
+    transition: all 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(8,8,8,0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    padding: 14px 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Amiri', serif;
+    font-size: 1.7rem;
+    color: var(--gold-light);
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(245,240,232,0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; right: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.25) saturate(0.8);
+    transform: scale(1.08);
+    animation: slowZoom 14s ease-out forwards;
+  }
+
+  @keyframes slowZoom {
+    from { transform: scale(1.08); }
+    to   { transform: scale(1.0); }
+  }
+
+  /* Gold streak overlay */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(105deg, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.4) 50%, transparent 100%),
+      linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 50%);
+  }
+
+  /* Decorative vertical line */
+  .hero-line {
+    position: absolute;
+    top: 0; right: 38%;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+    animation: lineIn 1.5s ease 0.5s both;
+  }
+
+  @keyframes lineIn {
+    from { transform: scaleY(0); opacity: 0; }
+    to   { transform: scaleY(1); opacity: 1; }
+  }
+
+  .hero-content {
+    position: relative;
+    padding: 0 64px;
+    max-width: 680px;
+  }
+
+  .hero-tag {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    animation: fadeRight 1s ease 0.3s both;
+  }
+
+  @keyframes fadeRight {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-tag span {
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-tag p {
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 24px;
+    animation: fadeRight 1s ease 0.5s both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .hero-desc {
+    color: rgba(245,240,232,0.5);
+    font-size: 1rem;
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 44px;
+    max-width: 420px;
+    animation: fadeRight 1s ease 0.7s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    animation: fadeRight 1s ease 0.9s both;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--black);
+    padding: 15px 38px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(201,168,76,0.35);
+  }
+
+  .btn-ghost {
+    color: rgba(245,240,232,0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+  }
+
+  .btn-ghost::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: currentColor;
+    transition: width 0.3s;
+  }
+
+  .btn-ghost:hover { color: var(--gold-light); }
+  .btn-ghost:hover::before { width: 50px; }
+
+  /* Hours badge */
+  .hours-badge {
+    position: absolute;
+    bottom: 60px; left: 64px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeRight 1s ease 1.1s both;
+  }
+
+  .hours-dot {
+    width: 8px; height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
+    animation: blink 2s ease infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hours-text {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 1px;
+  }
+
+  .hours-text strong { color: var(--white); }
+
+  /* ===== STRIP ===== */
+  .strip {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    padding: 28px 64px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    background: var(--black2);
+  }
+
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: rgba(245,240,232,0.5);
+    font-size: 0.88rem;
+    letter-spacing: 1px;
+  }
+
+  .strip-item span { font-size: 1.4rem; }
+  .strip-item strong { color: var(--gold-light); font-weight: 700; }
+
+  /* ===== ABOUT ===== */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  .about-img {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) saturate(0.9);
+    transition: transform 0.8s ease;
+  }
+
+  .about-img:hover img { transform: scale(1.04); }
+
+  /* Gold corner decoration */
+  .about-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 120px; height: 120px;
+    border-right: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .about-text {
+    background: var(--black2);
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-tag {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-tag span {
+    width: 30px; height: 1px;
+    background: var(--gold);
+  }
+
+  .section-tag p {
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .about-text h2 {
+    font-family: 'Amiri', serif;
+    font-size: 2.8rem;
+    line-height: 1.25;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .about-text p {
+    color: rgba(245,240,232,0.45);
+    line-height: 2;
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .about-nums {
+    display: flex;
+    gap: 48px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .num-item {}
+  .num-val {
+    font-family: 'Amiri', serif;
+    font-size: 2.6rem;
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 700;
+  }
+  .num-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== SERVICES PREVIEW ===== */
+  .services-preview {
+    padding: 100px 64px;
+    background: var(--black);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .section-header h2 {
+    font-family: 'Amiri', serif;
+    font-size: 2.6rem;
+    color: var(--white);
+  }
+
+  .section-header a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s;
+  }
+
+  .section-header a:hover { gap: 14px; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .service-tile {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+  }
+
+  .service-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) saturate(0.7);
+    transition: all 0.6s ease;
+  }
+
+  .service-tile:hover img {
+    filter: brightness(0.6) saturate(1);
+    transform: scale(1.06);
+  }
+
+  .service-tile-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px 24px;
+    background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 60%);
+  }
+
+  .service-tile-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .service-tile-price {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  /* Gold line on hover */
+  .service-tile::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .service-tile:hover::after { width: 100%; }
+
+  /* ===== CTA ===== */
+  .cta {
+    position: relative;
+    padding: 120px 64px;
+    text-align: center;
+    overflow: hidden;
+    background: var(--black2);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  /* Decorative circles */
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    border: 1px solid rgba(201,168,76,0.06);
+    border-radius: 50%;
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; height: 300px;
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 50%;
+  }
+
+  .cta-content { position: relative; z-index: 1; }
+
+  .cta-content h2 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+
+  .cta-content p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .cta-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 16px 32px;
+    border-radius: 2px;
+    color: var(--gold-light);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+  }
+
+  .cta-phone:hover {
+    background: rgba(201,168,76,0.25);
+    transform: translateY(-2px);
+  }
+
+  .cta-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #25d366;
+    text-decoration: none;
+    font-size: 0.88rem;
+    letter-spacing: 1px;
+    transition: opacity 0.3s;
+  }
+
+  .cta-whatsapp:hover { opacity: 0.7; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--black);
+    padding: 60px 64px 32px;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 50px;
+  }
+
+  .footer-brand {}
+
+  .footer-logo-text {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .footer-brand p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.9;
+    font-weight: 300;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-col ul li a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul li a:hover { color: var(--gold-light); }
+
+  .footer-col p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.08);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-bottom p {
+    color: #2e2820;
+    font-size: 0.8rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .about { grid-template-columns: 1fr; }
+    .about-img { height: 400px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 24px; }
+    .hours-badge { left: 24px; }
+    .strip { padding: 28px 24px; gap: 28px; }
+    .about-text { padding: 50px 28px; }
+    .services-preview { padding: 60px 24px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta { padding: 80px 24px; }
+    footer { padding: 50px 24px 28px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">الأستاذ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="services.html">الخدمات</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span></span>
+      <p>صالون حلاقة رجالي فاخر</p>
+    </div>
+    <h1>أناقتك<em>تبدأ هنا</em></h1>
+    <p class="hero-desc">
+      في صالون الأستاذ، كل تفصيلة مهمة — من أول لحظة لحد ما تطلع بأحسن إطلالة
+    </p>
+    <div class="hero-actions">
+      <a href="services.html" class="btn-gold">شوف الخدمات</a>
+      <a href="contact.html" class="btn-ghost">اتواصل معنا</a>
+    </div>
+  </div>
+
+  <div class="hours-badge">
+    <div class="hours-dot"></div>
+    <div class="hours-text">مفتوح دلوقتي — <strong>٩ص حتى ١١م</strong></div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><span>✂️</span><div>خبرة <strong>أكتر من ١٠ سنين</strong></div></div>
+  <div class="strip-item"><span>👑</span><div>خامات <strong>فاخرة ومعقمة</strong></div></div>
+  <div class="strip-item"><span>📍</span><div>المعادي — <strong>٢٢ شارع فيصل</strong></div></div>
+  <div class="strip-item"><span>🕐</span><div>يومياً <strong>٩ص — ١١م</strong></div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&q=80" alt="صالون الأستاذ">
+  </div>
+  <div class="about-text">
+    <div class="section-tag"><span></span><p>قصتنا</p></div>
+    <h2>شغل يتكلم عن نفسه</h2>
+    <p>
+      صالون الأستاذ مش بس صالون حلاقة — ده تجربة كاملة. من أول ما تدخل لحد ما تطلع،
+      هتحس بالفرق في كل تفصيلة صغيرة.
+    </p>
+    <p>
+      بنشتغل بأحدث أدوات الحلاقة وأفضل المنتجات، وكل حاجة بتتعمل بأيدي محترفين
+      عندهم شغف حقيقي بشغلهم.
+    </p>
+    <div class="about-nums">
+      <div class="num-item">
+        <div class="num-val">+١٠</div>
+        <div class="num-label">سنوات خبرة</div>
+      </div>
+      <div class="num-item">
+        <div class="num-val">+٢٠٠</div>
+        <div class="num-label">زبون أسبوعياً</div>
+      </div>
+      <div class="num-item">
+        <div class="num-val">١٠٠٪</div>
+        <div class="num-label">رضا الزبائن</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" style="margin-bottom:12px"><span></span><p>خدماتنا</p></div>
+      <h2>أشهر خدماتنا</h2>
+    </div>
+    <a href="services.html">شوف الكل ←</a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-tile">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="حلاقة">
+      <div class="service-tile-content">
+        <div class="service-tile-name">حلاقة + تشكيل</div>
+        <div class="service-tile-price">٨٠ جنيه</div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="لحية">
+      <div class="service-tile-content">
+        <div class="service-tile-name">حلاقة + لحية</div>
+        <div class="service-tile-price">١٠٠ جنيه</div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80" alt="صبغة">
+      <div class="service-tile-content">
+        <div class="service-tile-name">صبغة شعر</div>
+        <div class="service-tile-price">١٥٠ جنيه</div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="كيراتين">
+      <div class="service-tile-content">
+        <div class="service-tile-name">كيراتين</div>
+        <div class="service-tile-price">٣٠٠ جنيه</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-content">
+    <h2>خد موعدك دلوقتي</h2>
+    <p>كلمنا على التليفون أو الواتساب</p>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+      <a href="tel:01098765432" class="cta-phone">📞 01098765432</a>
+      <a href="https://wa.me/201098765432" class="cta-whatsapp" target="_blank">
+        💬 واتساب — 01098765432
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo-text">الأستاذ</span>
+      <p>صالون حلاقة رجالي فاخر في قلب المعادي — بنقدم أحسن تجربة حلاقة بأيدي محترفين.</p>
+    </div>
+    <div class="footer-col">
+      <h4>صفحات</h4>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="services.html">الخدمات</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل</h4>
+      <p>📞 01098765432</p>
+      <p>📍 22 شارع فيصل، المعادي</p>
+      <p>🕐 ٩ص — ١١م يومياً</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 صالون الأستاذ — جميع الحقوق محفوظة</p>
+    <p style="color:#1e1810">Made with ♥</p>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+
+</body>
+</html>
